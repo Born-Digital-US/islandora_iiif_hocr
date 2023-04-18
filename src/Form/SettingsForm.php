@@ -136,6 +136,21 @@ class SettingsForm extends ConfigFormBase {
     parent::submitForm($form, $form_state);
   }
 
+  public function solrHocrFieldListCallback(array &$form, FormStateInterface $form_state) {
+    // Prepare our textfield. check if the example select field has a selected option.
+    if ($index_id = $form_state->getValue('solr_hocr_index')) {
+      $form['solr_hocr_fieldset']['solr_hocr_field']['#options'] = $this->hocrFieldOptionsFromIndexId($index_id);
+      $form['solr_hocr_fieldset']['solr_hocr_field']['#default_value'] = $form_state->getValue('solr_hocr_field') ?? "";
+    }
+    else {
+      $form['solr_hocr_fieldset']['solr_hocr_field']['#options'] = [];
+    }
+    // Return the updated select element.
+    return $form['solr_hocr_fieldset']['solr_hocr_field'];
+  }
+
+
+
     /**
    * Get list of search_api_solr indexes that:
    * 1. Index nodes (datasource id = entity:node)
