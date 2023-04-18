@@ -5,3 +5,18 @@ islandora_iiif_hocr_config_form:
     _form: 'Drupal\islandora_iiif_hocr\Form\SettingsForm'
   requirements:
     _permission: 'administer site configuration'
+# Search Highlight Endpoint for a given Node.
+islandora_iiif_hocr.hocr_search:
+  path: '/node/{node}/hocr-annotations-search/{canvas}'
+  methods: [GET]
+  defaults:
+    _controller: '\Drupal\islandora_iiif_hocr\Controller\OcrSearchController::search'
+    canvas: 'all'
+  options:
+    no_cache: TRUE
+    parameters:
+      node:
+        type: 'entity:node'
+      canvas: 'all'
+  requirements:
+    _entity_access: 'node.view'
