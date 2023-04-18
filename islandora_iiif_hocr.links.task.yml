@@ -1,0 +1,4 @@
+islandora_iiif_hocr.islandora_iiif_hocr_config_form:
+  title: Islandora IIIF hOCR Settings
+  route_name: islandora_iiif_hocr.islandora_iiif_hocr_config_form
+  base_route: islandora_iiif.islandora_iiif_config_form

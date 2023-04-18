@@ -1,0 +1,7 @@
+islandora_iiif_hocr_config_form:
+  path: '/admin/config/islandora/iiif/hocr'
+  defaults:
+    _title: 'Islandora IIIF hOCR Settings'
+    _form: 'Drupal\islandora_iiif_hocr\Form\SettingsForm'
+  requirements:
+    _permission: 'administer site configuration'
