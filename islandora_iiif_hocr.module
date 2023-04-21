@@ -4,3 +4,29 @@
  * @file
  * Primary module hooks for Islandora IIIF hOCR module.
  */
+
+ /**
+  * Implementation of hook_islandora_manifest_alter().
+  */
+function islandora_iiif_hocr_islandora_iiif_manifest_alter(&$json, &$views_plugin) {
+    // Sanity check that the hook is being invoked from the Views Template plugin.
+    if (get_class($views_plugin) !== 'Drupal\islandora_iiif\Plugin\views\style\IIIFManifest') {
+        Drupal::mmessenger()->addWarning("Hook islandora_iiif_manifest_alter parameter 2 not of type Drupal\islandora_iiif\Plugin\views\style\IIIFManifest");
+        return;
+    }
+
+    $nid = $views_plugin->getRequest()->attributes->get('node');
+    if (!$nid) {
+        return;
+    }
+
+    $url_base = $views_plugin->getRequest()->getSchemeAndHttpHost();
+    $hocr_search_path = \Drupal\Core\Url::fromRoute('islandora_iiif_hocr.hocr_search', ['node' => $nid])->toString();
+    $hocr_search_url = $url_base . $hocr_search_path;
+    $json['service'][] = [
+          "@context" => "http://iiif.io/api/search/0/context.json",
+          "@id" => $hocr_search_url,
+          "profile" => "http://iiif.io/api/search/0/search",
+          "label" => t("Search inside this work"),
+    ];
+}
