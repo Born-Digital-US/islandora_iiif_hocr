@@ -1,0 +1,16 @@
+{
+    "name": "islandora/islandora_iiif_hocr",
+    "description": "Islandora support for hOCR markup in IIIF manifests",
+    "type": "drupal-module",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "keywords": ["Drupal", "Islandora"],
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://github.com/Islandora/islandora_iiif_hocr",
+    "support": {
+      "issues": "https://github.com/Islandora/documentation/issues"
+    },
+    "require": {
+      "islandora/islandora": "^2"
+    }
+  }
