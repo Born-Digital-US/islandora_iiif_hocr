@@ -5,8 +5,10 @@
  * Primary module hooks for Islandora IIIF hOCR module.
  */
 
+ use Solarium\Core\Query\QueryInterface as SolariumQueryInterface;
  use Drupal\search_api\Query\QueryInterface;
-
+ 
+ 
  /**
   * Implementation of hook_islandora_manifest_alter().
   */
