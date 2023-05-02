@@ -135,6 +135,7 @@ class OcrSearchController extends ControllerBase {
 
       $annotations = $this->getCanvasHocr($input, $mids, $node);
       $annotationsList = [
+        '@context' => 'http://iiif.io/api/presentation/2/context.json',
         'startIndex' => 0,
         'within' => [
           'total' => count($annotations),
@@ -288,7 +289,7 @@ class OcrSearchController extends ControllerBase {
                 ];
 
                 $json = [
-                  '@type' => "oa:Annotation",
+                  '@type' => "Annotation",
                   "motivation" => "sc:painting",
                   "resource" => [
                     "@type" => "dctypes:Text",
@@ -302,7 +303,7 @@ class OcrSearchController extends ControllerBase {
                   // "@id" is a persistent unique identifier for this particular annotation.
                   "@id" => $base_url . '/annotation' . md5('/node/' . $node_id  . '/canvas/' . $canvas_id . "#xywh=" . implode(",", $xywh)),
                   // TODO: What is this @context - where should I get it from?
-                  "@context" => "file:/usr/local/tomcat/webapps/ROOT/contexts/iiif-2.0.json",
+//                  "@context" => "file:/usr/local/tomcat/webapps/ROOT/contexts/iiif-2.0.json",
                   "label" => $highlightPart['text'],
                 ];
                 $annotations[] = $json;
