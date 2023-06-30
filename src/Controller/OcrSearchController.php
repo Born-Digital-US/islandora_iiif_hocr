@@ -68,7 +68,7 @@ class OcrSearchController extends ControllerBase {
     $this->request = $request_stack;
     $this->entityTypeManager = $entitytype_manager;
     $this->parseModeManager = $parse_mode_manager;
-    $this->config = \Drupal::config('islandora_mirador.settings');
+    $this->config = \Drupal::config('islandora_iiif_hocr.settings');
     $this->solrIndex = \Drupal::entityTypeManager()->getStorage('search_api_index')->load($this->config->get('solr_hocr_index'));
     $this->solrHocrField = $this->config->get('solr_hocr_field');
   }
