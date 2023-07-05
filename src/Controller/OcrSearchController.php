@@ -68,7 +68,7 @@ class OcrSearchController extends ControllerBase {
     $this->request = $request_stack;
     $this->entityTypeManager = $entitytype_manager;
     $this->parseModeManager = $parse_mode_manager;
-    $this->config = \Drupal::config('islandora_mirador.settings');
+    $this->config = \Drupal::config('islandora_iiif_hocr.settings');
     $this->solrIndex = \Drupal::entityTypeManager()->getStorage('search_api_index')->load($this->config->get('solr_hocr_index'));
     $this->solrHocrField = $this->config->get('solr_hocr_field');
   }
@@ -104,10 +104,10 @@ class OcrSearchController extends ControllerBase {
     if ($input = $request->query->get('q')) {
       // $mids is media entity ids, aka canvas ids.
       $mids = [];
-      // Determine the iiif manifest type: paged content, or page.
+      // Determine the iiif manifest type:  content, or page.
       $content_model = $node->get('field_model')->referencedEntities()[0]->label();
-      if ($content_model == 'Paged Content') {
-        [$view_id, $display_id] = explode('/', $this->config->get('solr_hocr_paged_content_display'));
+      if ($content_model == 'Paged Content' && ($paged_content_display = $this->config->get('solr_hocr_paged_content_display'))) {
+        [$view_id, $display_id] = explode('/', $paged_content_display);
       }
       else {
         // If not paged content, we assume page, but it could be any content model, as long as it has attached media.
