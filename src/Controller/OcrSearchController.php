@@ -218,6 +218,7 @@ class OcrSearchController extends ControllerBase {
 
     $solr_field_names = $this->solrIndex->getServerInstance()->getBackend()->getLanguageSpecificSolrFieldNames($langcode, $this->solrIndex);
     $query->setOption('search_api_bypass_access', TRUE);
+    $annotations = [];
     if (isset($solr_field_names[$hocr_solr_field])) {
       $query->setOption('search_api_retrieved_field_values', [$hocr_solr_field, 'search_api_solr_score_debugging']);
 
@@ -240,9 +241,7 @@ class OcrSearchController extends ControllerBase {
             $extradata['search_api_solr_response']['ocrHighlighting']
           ) > 0) {
 
-          // We have ocrHighlighting data. Now we're ready to build our annotation list.
-          $annotations = [];
-//          return $extradata['search_api_solr_response']['ocrHighlighting'];
+          // We have ocrHighlighting data. Now we're ready to build our annotation list
           foreach ($extradata['search_api_solr_response']['ocrHighlighting'] as $sol_doc_id => $field) {
             $annotations = array_merge($annotations, $this->singleCanvasOcrToOpenAnnotation($field,  $sol_doc_id, $node->id() ));
           }
