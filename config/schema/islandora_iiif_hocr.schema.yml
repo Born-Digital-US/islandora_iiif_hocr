@@ -15,3 +15,10 @@ islandora_iiif_hocr.settings:
     solr_hocr_field:
       type: string
       label: 'Solr field with OCR highlight'
+views.style.islandora_iiif_hocr_iiif_search_result_annotations:
+  type: views_style
+  label: 'IIIF Search Result Annotations'
+  mapping:
+    wrapper_class:
+      type: string
+      label: Wrapper class
