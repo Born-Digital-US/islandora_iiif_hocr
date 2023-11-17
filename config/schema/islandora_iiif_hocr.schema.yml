@@ -17,8 +17,8 @@ islandora_iiif_hocr.settings:
       label: 'Solr field with OCR highlight'
 views.style.islandora_iiif_hocr_iiif_search_result_annotations:
   type: views_style
-  label: 'IIIF Search Result Annotations'
+  label: 'Canvas media use term URI'
   mapping:
-    wrapper_class:
+    canvas_media_term_uri:
       type: string
-      label: Wrapper class
+      label: Canvas media use term URI
