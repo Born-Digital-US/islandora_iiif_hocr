@@ -5,35 +5,10 @@
  * Primary module hooks for Islandora IIIF hOCR module.
  */
 
- use Solarium\Core\Query\QueryInterface as SolariumQueryInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Solarium\Core\Query\QueryInterface as SolariumQueryInterface;
  use Drupal\search_api\Query\QueryInterface;
- 
- 
- /**
-  * Implementation of hook_islandora_manifest_alter().
-  */
-function islandora_iiif_hocr_islandora_iiif_manifest_alter(&$json, &$views_plugin) {
-    // Sanity check that the hook is being invoked from the Views Template plugin.
-    if (get_class($views_plugin) !== 'Drupal\islandora_iiif\Plugin\views\style\IIIFManifest') {
-        Drupal::mmessenger()->addWarning("Hook islandora_iiif_manifest_alter parameter 2 not of type Drupal\islandora_iiif\Plugin\views\style\IIIFManifest");
-        return;
-    }
 
-    $nid = $views_plugin->getRequest()->attributes->get('node');
-    if (!$nid) {
-        return;
-    }
-
-    $url_base = $views_plugin->getRequest()->getSchemeAndHttpHost();
-    $hocr_search_path = \Drupal\Core\Url::fromRoute('islandora_iiif_hocr.hocr_search', ['node' => $nid])->toString();
-    $hocr_search_url = $url_base . $hocr_search_path;
-    $json['service'][] = [
-          "@context" => "http://iiif.io/api/search/0/context.json",
-          "@id" => $hocr_search_url,
-          "profile" => "http://iiif.io/api/search/0/search",
-          "label" => t("Search inside this work"),
-    ];
-}
 
 
 /**
@@ -48,6 +23,7 @@ function islandora_iiif_hocr_islandora_iiif_manifest_alter(&$json, &$views_plugi
  *
  */
 function islandora_iiif_hocr_search_api_solr_query_alter(SolariumQueryInterface $solarium_query, QueryInterface $query) {
+return;  ;
     // To get a list of solarium events:
     // @see http://solarium.readthedocs.io/en/stable/customizing-solarium/#plugin-system
     if ($query->getOption('no_highlight')) {
@@ -56,40 +32,14 @@ function islandora_iiif_hocr_search_api_solr_query_alter(SolariumQueryInterface 
       $hl = $solarium_query->getHighlighting();
       $hl->clearFields();
     }
-  
+
     if ($query->getOption('ocr_highlight')) {
       /* @var \Solarium\Component\Highlighting\Highlighting $hl */
       $hl = $solarium_query->getHighlighting();
       $hl->clearFields();
-  
+
       $solarium_query->addParam('hl.ocr.fl', $query->getOption('ocr_highlight'));
       $solarium_query->addParam('hl.ocr.absoluteHighlights', 'on');
       $solarium_query->addParam('hl.method', 'UnifiedHighlighter');
     }
   }
-  
-use Drupal\Core\Template\Attribute;
-
-/**
- * Prepares variables for views-style-islandora-iiif-hocr-iiif-search-result-annotations.html.twig template.
- */
-function template_preprocess_views_style_islandora_iiif_hocr_iiif_search_result_annotations(&$variables) {
-
-  $view = $variables['view'];
-  $options = $view->style_plugin->options;
-
-  // Fetch wrapper classes from handler options.
-  if ($options['wrapper_class']) {
-    $variables['attributes']['class'] = explode(' ', $options['wrapper_class']);
-  }
-
-  $variables['default_row_class'] = $options['default_row_class'];
-  foreach ($variables['rows'] as $id => $row) {
-    $variables['rows'][$id] = [];
-    $variables['rows'][$id]['content'] = $row;
-    $variables['rows'][$id]['attributes'] = new Attribute();
-    if ($row_class = $view->style_plugin->getRowClass($id)) {
-      $variables['rows'][$id]['attributes']->addClass($row_class);
-    }
-  }
-}
