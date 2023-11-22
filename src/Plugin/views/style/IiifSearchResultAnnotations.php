@@ -202,16 +202,17 @@ protected $usesOptions = TRUE;
 
 
   protected function getAnnotationsForRow(ResultRow $row): array {
-$row_resources = [];
+
+    $row_resources = [];
 
     /**
      * @var Drupal\search_api\Item\Item
      */
     $item = $row->_item;
     if ($extra = $item->getExtraData('islandora_hocr_highlights')) {
-    [$entity, $entity_type, $entity_id, $language] = explode('/', $item->getId());
-    $mids = $this->utils->getMediaReferencingNodeAndTerm($item->getOriginalObject()->getEntity(), $this->canvasMediaUseTerm);
-    $mid = reset($mids);
+      [$entity_placeholder, $entity_type, $entity_id, $language] = explode('/', str_replace(':', '/', $item->getId()));
+      $mids = $this->utils->getMediaReferencingNodeAndTerm($item->getOriginalObject()->getEntity(), $this->canvasMediaUseTerm);
+      $mid = reset($mids);
       $base_url = $this->request->getSchemeAndHttpHost();
 
       foreach ($extra as $snippet_field_name) {
@@ -225,21 +226,22 @@ $row_resources = [];
                      $uly = $highlight['uly'];
                      $lrx = $highlight['lrx'];
                      $lry = $highlight['lry'];
-                     $x = $lrx - $ulx;
-                     $y = $lry;
-                     $w = $lrx - $x;
-                     $h = $uly - $y;
+
+                     // The canvas's origin point is at the top-left.
+                     $x = $ulx;
+                     $y = $uly;
+                     $w = abs($lrx - $ulx);
+                     $h = abs($uly - $lry);
 
                      $resource = [];
                      $resource["@type"] = "Annotation";
                      $resource["motivation"] = "sc:painting";
                      $resource["resource"]["@type"] = "dctypes:Text";
                      $resource["resource"]["format"] = "text/html";
-                     $resource["resource"]["chars"] = $snippet['regions'][$highlight_region]['text'];
+                     $resource["resource"]["chars"] = $highlight["text"];
                      $resource["resource"]["http://dev.llgc.org.uk/sas/full_text"] = $highlight["text"];
 
-
-                     $search_annotation ='/node/' . $entity_id . '/canvas' . $mid . '#xywh=' . $x . ',' . $y . ',' . $w . ',' . $h;
+                     $search_annotation ='/node/' . $entity_id . '/canvas/' . $mid . '#xywh=' . $x . ',' . $y . ',' . $w . ',' . $h;
                      $resource['on'] = $base_url . $search_annotation;
 
                      $resource['@id'] = $base_url. '/annotation/' . md5($search_annotation);
