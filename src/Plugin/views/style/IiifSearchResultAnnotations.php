@@ -209,11 +209,14 @@ protected $usesOptions = TRUE;
      * @var Drupal\search_api\Item\Item
      */
     $item = $row->_item;
-    if ($extra = $item->getExtraData('islandora_hocr_highlights')) {
+     if ($extra = $item->getExtraData('islandora_hocr_highlights')) {
       [$entity_placeholder, $entity_type, $entity_id, $language] = explode('/', str_replace(':', '/', $item->getId()));
       $mids = $this->utils->getMediaReferencingNodeAndTerm($item->getOriginalObject()->getEntity(), $this->canvasMediaUseTerm);
       $mid = reset($mids);
       $base_url = $this->request->getSchemeAndHttpHost();
+
+      // Used for building the canvas ID, which uses the book ID not the page's.
+      $parent_nid = $this->view->args[0];
 
       foreach ($extra as $snippet_field_name) {
         if (!empty($snippet_field_name['snippets'])) {
@@ -237,11 +240,11 @@ protected $usesOptions = TRUE;
                      $resource["@type"] = "Annotation";
                      $resource["motivation"] = "sc:painting";
                      $resource["resource"]["@type"] = "dctypes:Text";
-                     $resource["resource"]["format"] = "text/html";
+                     $resource["resource"]["format"] = "text/plain";
                      $resource["resource"]["chars"] = $highlight["text"];
                      $resource["resource"]["http://dev.llgc.org.uk/sas/full_text"] = $highlight["text"];
 
-                     $search_annotation ='/node/' . $entity_id . '/canvas/' . $mid . '#xywh=' . $x . ',' . $y . ',' . $w . ',' . $h;
+                     $search_annotation ='/node/' . $parent_nid . '/canvas/' . $mid . '#xywh=' . $x . ',' . $y . ',' . $w . ',' . $h;
                      $resource['on'] = $base_url . $search_annotation;
 
                      $resource['@id'] = $base_url. '/annotation/' . md5($search_annotation);
