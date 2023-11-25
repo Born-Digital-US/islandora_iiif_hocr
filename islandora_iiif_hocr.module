@@ -20,20 +20,17 @@
 function islandora_iiif_hocr_views_query_alter(\Drupal\views\ViewExecutable $view, \Drupal\views\Plugin\views\query\QueryPluginBase $query) {
 
   // Bail if this is not a Search API query with the 'enable_hocr' tag.
-  if (is_a($query, 'Drupal\search_api\Plugin\views\query\SearchApiQuery')) {
-    if (array_key_exists('query_tags', $query->options)
-      && in_array('enable_hocr', $query->options['query_tags'])) {
-        $query->setOption('islandora_hocr_properties', [
-          'content' => [],
-        ]);
+  if (is_a($query, 'Drupal\search_api\Plugin\views\query\SearchApiQuery')
+    && array_key_exists('query_tags', $query->options)
+    && in_array('enable_hocr', $query->options['query_tags'])) {
+      $query->setOption('islandora_hocr_properties', [
+        'content' => [],
+      ]);
 
-
-
-      $query_keys =  \Drupal::request()->query->get('q');
-      if ($query_keys) {
-        $keys_from_query_params = $query->query()->getParseMode()->parseInput($query_keys);
-        $view->query->keys($keys_from_query_params);
-      }
+    $query_keys =  \Drupal::request()->query->get('q');
+    if ($query_keys) {
+      $keys_from_query_params = $query->query()->getParseMode()->parseInput($query_keys);
+      $view->query->keys($keys_from_query_params);
     }
   }
 }
