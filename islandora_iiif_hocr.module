@@ -4,50 +4,12 @@
  * @file
  * Primary module hooks for Islandora IIIF hOCR module.
  */
-
-use Drupal\Core\Form\FormStateInterface;
-use Solarium\Core\Query\QueryInterface as SolariumQueryInterface;
  use Drupal\search_api\Query\QueryInterface;
-
-
-
-/**
- * Implements hook_search_api_solr_query_alter().
- *
- * Add ocr highlight params into the solr query.
- *
- * It's a mystery as to why it should be necessary to alter the solarium query in order to add the
- * highlight parameters. We should be able to add them inside the search_api query build using the
- * `solr_param_` method to inject solarium parameters: https://git.drupalcode.org/project/search_api_solr/-/blob/4.x/src/Plugin/search_api/backend/SearchApiSolrBackend.php#L1605-1610
- * However that is not working, and so we're reduced to this ugly alter hook.
- *
- */
-function islandora_iiif_hocr_search_api_solr_query_alter(SolariumQueryInterface $solarium_query, QueryInterface $query) {
-return;  ;
-    // To get a list of solarium events:
-    // @see http://solarium.readthedocs.io/en/stable/customizing-solarium/#plugin-system
-    if ($query->getOption('no_highlight')) {
-      $solarium_query->addParam('hl', 'false');
-      /* @var \Solarium\Component\Highlighting\Highlighting $hl */
-      $hl = $solarium_query->getHighlighting();
-      $hl->clearFields();
-    }
-
-    if ($query->getOption('ocr_highlight')) {
-      /* @var \Solarium\Component\Highlighting\Highlighting $hl */
-      $hl = $solarium_query->getHighlighting();
-      $hl->clearFields();
-
-      $solarium_query->addParam('hl.ocr.fl', $query->getOption('ocr_highlight'));
-      $solarium_query->addParam('hl.ocr.absoluteHighlights', 'on');
-      $solarium_query->addParam('hl.method', 'UnifiedHighlighter');
-    }
-  }
 
 /**
  * Implementation of hook_views_query_alter().
  *
- * Since we have to handle the Mirador's sending search queries witha 'q' parameger, which you can't
+ * Since we have to handle the Mirador's sending search queries witha 'q' parameter, which you can't
  * set as a Search API query id, we must parse the 'q' parameter and set it as the query key(s) ourselves.
  *
  * @param \Drupal\views\ViewExecutable $view
@@ -58,7 +20,8 @@ return;  ;
 function islandora_iiif_hocr_views_query_alter(\Drupal\views\ViewExecutable $view, \Drupal\views\Plugin\views\query\QueryPluginBase $query) {
 
   // Bail if this is not a Search API query with the 'enable_hocr' tag.
-  if (is_a($query, 'Drupal\search_api\Plugin\views\query\SearchApiQuery') &&array_key_exists('query_tags', $query->options)
+  if (is_a($query, 'Drupal\search_api\Plugin\views\query\SearchApiQuery')
+    &&array_key_exists('query_tags', $query->options)
     && in_array('enable_hocr', $query->options['query_tags'])) {
 
     $query_keys =  \Drupal::request()->query->get('q');

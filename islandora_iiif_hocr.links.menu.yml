@@ -1,6 +1,0 @@
-islandora_iiif_hocr_config_form:
-  title: Islandora IIIF hOCR Settings
-  description: Islandora IIIF hOCR Admin Form
-  route_name: islandora_iiif_hocr_config_form
-  parent: system.admin_config_islandora
-  weight: 10

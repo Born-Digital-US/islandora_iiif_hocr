@@ -4,11 +4,10 @@
 
 This module is part of the Islandora project and extends the Islandora IIIF component module
 to support IIIF search results annotations. This provides the back-end support for
-on-page highlighting of search results within image viewers such as [Mirador](https://github.com/ProjectMirador/mirador) 
+on-page highlighting of search results within image viewers such as [Mirador](https://github.com/ProjectMirador/mirador)
 via the [Islandora Mirador](https://github.com/islandora/islandora_mirador) module.
-On its own this module does not provide any end-user functionality.
 
-## Installation 
+## Installation
 
 Until this gets added to Packagist, you will need to add this project to your
 composer.json's repositories section.
@@ -35,11 +34,6 @@ To prepare to perform text searches with result coordinate highlights, islandora
 - In your solr index you will need to enable media entity indexing, and then add a field that indexes the editable hocr text field on the file media type (`field_editable_hocr_text`)
   ![solr-media-file-field_editable_hocr_text.png](docs/solr-media-file-field_editable_hocr_text.png)
 
-- Finally, on the Islandora Miradora configuration form...
-![islandora_mirador-config-form-ocr-highlighting.png](docs/islandora_mirador-config-form-ocr-highlighting.png)
-  - Select the views and displays that are used to generate your IIIF Manifests for "Paged Content" and "Page" objects, respectively.
-  - Select the solr field in which you are indexing the hocr editable text field on media entities. To do this, you must first select which solr index this field is found in (normally there is just one).
-
 ## Documentation
 
 Further documentation for IIIF (International Image Interoperability Framework) is available on the [Islandora 8 documentation site](https://islandora.github.io/documentation/user-documentation/iiif/).
@@ -55,8 +49,6 @@ Having problems? Solved a problem? Join the Islandora [communication channels](h
 
 If you would like to contribute code to the project, you need to be covered by an Islandora Foundation [Contributor License Agreement](https://github.com/Islandora/islandora-community/wiki/Onboarding-Checklist#contributor-license-agreements) or [Corporate Contributor License Agreement](https://github.com/Islandora/islandora-community/wiki/Onboarding-Checklist#contributor-license-agreements). Please see the [Contributor License Agreements](https://github.com/Islandora/islandora-community/wiki/Contributor-License-Agreements) page on the islandora-community wiki for more information.
 
-## Acknowledgements
-- The IIIF Search API code used in this module, and the solr ocr highlighting configuration that it depends on, is built off of, and gratefully indebted to, the work of [Diego Pino](https://github.com/DiegoPino), [Giancarlo Birello](https://github.com/giancarlobi) and other contributors to the Archipelago Commons open source initiative of the [Metropolitan New York Library Council](https://metro.org/).
 
 ## License
 
