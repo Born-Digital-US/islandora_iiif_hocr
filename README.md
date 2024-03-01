@@ -9,30 +9,15 @@ via the [Islandora Mirador](https://github.com/islandora/islandora_mirador) modu
 
 ## Installation
 
-Until this gets added to Packagist, you will need to add this project to your
-composer.json's repositories section.
+Include with `composer require born-digital/islandora_iiif_hocr`
 
 ### Configuring Search Highlighting annotations
 
-To prepare to perform text searches with result coordinate highlights, islandora_mirador requires several additional configuration steps after those previously made to enable Mirador with text overlay:
-- The [solr-ocrhighlighting](https://github.com/dbmdz/solr-ocrhighlighting) plugin needs to be installed in your islandora installation's solr server in `/opt/solr/server/solr/contrib/ocrhighlighting/lib`. These instructions have been tested with version 0.7.2. This might be done using the following commands (assuming a typical docker setup with a "solr" container):
-```
-	curl -k -L https://github.com/dbmdz/solr-ocrhighlighting/releases/download/0.7.2/solr-ocrhighlighting-0.7.2.jar > data/solr-ocrhighlighting.jar
-	docker-compose exec -T solr with-contenv bash -lc "mkdir -p /opt/solr/server/solr/contrib/ocrhighlighting/lib"
-	docker cp data/solr-ocrhighlighting.jar $$(docker-compose ps -q solr):/opt/solr/server/solr/contrib/ocrhighlighting/lib/solr-ocrhighlighting.jar
-	docker-compose exec -T solr with-contenv bash -lc "chown -R solr:solr /opt/solr/server/solr/contrib/ocrhighlighting"
-	docker-compose restart solr
+Although it is not expressed as a hard requirement, this module assumes tue use of https://github.com/discoverygarden/islandora_hocr, including the installation and configuration of the [solr-ocrhighlighting](https://github.com/dbmdz/solr-ocrhighlighting) Solr plugin.
 
-```
-- The schema.xml and solrconfig.xml files, located at `/opt/solr/server/solr/ISLANDORA/conf/` in your solr container, need to be edited. Samples can be found in `docs/solr-ocr-setup` distributed with this module):
-  - The solrconfig.xml needs to be edited to load the `solr-ocrhighlighting-0.7.2.jar` file, and to define a "ocrHighlight" search component that uses it.
-  - The schema.xml needs to be edited to add a solr field named "ocr_text".
-- Search api solr field types be added which define "ocr_highlight" field types for each language that you support in your Islandora installation. Typically, english (`en`) and "undefined" (`und`) field types would be needed. Configuration files for these can be found in `docs/solr-ocr-setup` distributed with this module.
-- Add another field to the **File** media type, this one to hold the editable hOCR text that is generated. This field will hold the exact same text as that contained by the file that is attached to the extracted hOCR text file field. This field should be of the type "Text (formatted, long)". This could be called "Editable hOCR text".
-- Edit the "hOCR for Media Attachment" action that you created earlier, and add the editable hocr text field as a *Destination Text Field Name*<br />
-![add-text-field-destination-to-hocr-generate-action.png](docs/add-text-field-destination-to-hocr-generate-action.png)
-- In your solr index you will need to enable media entity indexing, and then add a field that indexes the editable hocr text field on the file media type (`field_editable_hocr_text`)
-  ![solr-media-file-field_editable_hocr_text.png](docs/solr-media-file-field_editable_hocr_text.png)
+### Usage
+
+...
 
 ## Documentation
 
