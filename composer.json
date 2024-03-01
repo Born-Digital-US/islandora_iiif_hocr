@@ -1,14 +1,14 @@
 {
-    "name": "islandora/islandora_iiif_hocr",
+    "name": "born-digital/islandora_iiif_hocr",
     "description": "Islandora support for hOCR markup in IIIF manifests",
     "type": "drupal-module",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "keywords": ["Drupal", "Islandora"],
+    "keywords": ["Drupal", "Islandora", "IIIF"],
     "license": "GPL-2.0-or-later",
-    "homepage": "https://github.com/Islandora/islandora_iiif_hocr",
+    "homepage": "https://github.com/Born-Digital-US/islandora_iiif_hocr",
     "support": {
-      "issues": "https://github.com/Islandora/documentation/issues"
+      "issues": "https://github.com/Born-Digital-US/islandora_iiif_hocr/issues"
     },
     "require": {
       "islandora/islandora": "^2"
