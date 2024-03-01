@@ -17,7 +17,43 @@ Although it is not expressed as a hard requirement, this module assumes tue use 
 
 ### Usage
 
-...
+The module provides a Views style plugin to format the results of a Search API Solr response
+in IIIF annotation format. Thus setting it up requires
+a search view be created.
+A sample search view is located in the config/optional folder of
+this module.
+
+The important parts are:
+
+- Create a Media view and set the formatter to 'IIIF Search Result Annotations'.
+- In the style plugin settings, choose the Media Use term that is configured in the IIIF Manifest
+that this search will be attached to. Usually 'Service File' or 'Original File'.
+- Add a search filter for the hOCR, 'Fulltext hOCR search (and )' field.
+    the Filter identifier can be set to anything since Mirador sends the query with a 'q' parameter which
+    the module's code looks for.
+- Set a sort criteria, eitehr Relevance or, to make results appear in page order,, field_weight.
+- Set a path with a'%node' component to be the search endpoint.
+    e.g., paged-content-search/%node.
+    Note this path as it's needed back in the IIIF Manifest view settings.
+- Add a Contextual Filter for 'Content datasource: Member of'. This restricts the search
+        to the book that the search is being done on.
+- Under query settings, set 'the Query Tag field to 'enable_hocr'.
+        This is important as it tells this module to add hOCR-specific
+        parameters to the search query.
+- Add another display for Single Item search, and leave off the contextual filter, so only the single node
+    is searched.
+
+After saving the view, it can be tested by going directly to the path endpoint
+with a search parameter added, e.g., paged-content-search/%[some-book-nid]]?search_query_param="My search"
+
+To make Mirador be able to do searches, go back to the views settings
+for the IIIF Manifest, and edit the IIIF Manifest style plugin settings.
+
+There is now a field for setting the search endpoint that Mirador (or another viewer that supports IIIF Search) should use.[^1] Put in the path you set above, including %node, and save.*
+
+[^1]: Pending the merge of https://github.com/Islandora/islandora/pull/983
+
+
 
 ## Documentation
 
