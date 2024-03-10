@@ -1,17 +1,14 @@
-uuid: bdc760f8-a979-4f55-bf58-f0e8576f84a0
+uuid: 36020969-423e-4181-872c-16af33765301
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_display_title
     - node.type.islandora_object
     - search_api.index.default_solr_index
   module:
     - islandora_iiif_hocr
     - rest
     - search_api
-    - views_block_area
-_core:
   default_config_hash: lvIQBL8yMLi95TLjdkveIf-I2hKet-_oOOsWG4ywE10
 id: search_in_hocr
 label: 'Search in hOCR'
@@ -349,106 +346,6 @@ display:
           empty: true
           content: 'Displaying results @start - @end of @total'
       footer:
-        views_block_area:
-          id: views_block_area
-          table: views
-          field: views_block_area
-          relationship: none
-          group_type: group
-          admin_label: 'Facets Summary'
-          plugin_id: views_block_area
-          block_id: 'facets_summary_block:facet_summary'
-          empty: false
-        views_block_area_8:
-          id: views_block_area_8
-          table: views
-          field: views_block_area
-          relationship: none
-          group_type: group
-          admin_label: 'Facet - Genre'
-          plugin_id: views_block_area
-          block_id: 'facet_block:genre_block'
-          empty: false
-        views_block_area_12:
-          id: views_block_area_12
-          table: views
-          field: views_block_area
-          relationship: none
-          group_type: group
-          admin_label: 'Facet - Collection'
-          plugin_id: views_block_area
-          block_id: 'facet_block:member_of_block'
-          empty: false
-        views_block_area_1:
-          id: views_block_area_1
-          table: views
-          field: views_block_area
-          relationship: none
-          group_type: group
-          admin_label: 'Facet - Type'
-          plugin_id: views_block_area
-          block_id: 'facet_block:type_collections'
-          empty: false
-        views_block_area_15:
-          id: views_block_area_15
-          table: views
-          field: views_block_area
-          relationship: none
-          group_type: group
-          admin_label: 'Facet - Subject (topical)'
-          plugin_id: views_block_area
-          block_id: 'facet_block:subject_block'
-          empty: false
-        views_block_area_9:
-          id: views_block_area_9
-          table: views
-          field: views_block_area
-          relationship: none
-          group_type: group
-          admin_label: 'Facet - Subject (geographic)'
-          plugin_id: views_block_area
-          block_id: 'facet_block:geographic_subject_block'
-          empty: false
-        views_block_area_17:
-          id: views_block_area_17
-          table: views
-          field: views_block_area
-          relationship: none
-          group_type: group
-          admin_label: 'Facet - Contributor'
-          plugin_id: views_block_area
-          block_id: 'facet_block:linked_agent_collection'
-          empty: false
-        views_block_area_2:
-          id: views_block_area_2
-          table: views
-          field: views_block_area
-          relationship: none
-          group_type: group
-          admin_label: 'Facet - Location'
-          plugin_id: views_block_area
-          block_id: 'facet_block:location_search'
-          empty: false
-        views_block_area_3:
-          id: views_block_area_3
-          table: views
-          field: views_block_area
-          relationship: none
-          group_type: group
-          admin_label: 'Facet - Date'
-          plugin_id: views_block_area
-          block_id: 'facet_block:date_col'
-          empty: false
-        views_block_area_4:
-          id: views_block_area_4
-          table: views
-          field: views_block_area
-          relationship: none
-          group_type: group
-          admin_label: 'Facet - Date Range (collection search)'
-          plugin_id: views_block_area
-          block_id: 'facet_block:unified_date_col'
-          empty: false
       display_extenders: {  }
     cache_metadata:
       max-age: -1
@@ -691,7 +588,6 @@ display:
           title: ''
           default_argument_type: node
           default_argument_options: {  }
-          default_argument_skip_url: false
           summary_options: {  }
           summary:
             sort_order: asc
@@ -1050,7 +946,6 @@ display:
           title: ''
           default_argument_type: node
           default_argument_options: {  }
-          default_argument_skip_url: false
           summary_options: {  }
           summary:
             sort_order: asc
