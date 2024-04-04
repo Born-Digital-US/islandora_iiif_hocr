@@ -11,6 +11,7 @@
       "issues": "https://github.com/Born-Digital-US/islandora_iiif_hocr/issues"
     },
     "require": {
-      "islandora/islandora": "^2"
+      "islandora/islandora": "*",
+      "discoverygarden/islandora_hocr": "*"
     }
   }
