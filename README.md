@@ -29,8 +29,7 @@ The important parts are:
 - In the style plugin settings, choose the Media Use term that is configured in the IIIF Manifest
 that this search will be attached to. Usually 'Service File' or 'Original File'.
 - Add a search filter for the hOCR, 'Fulltext hOCR search (and )' field.
-    the Filter identifier can be set to anything since Mirador sends the query with a 'q' parameter which
-    the module's code looks for.
+    In this filter's settings, thSet the Filter Identifier field to "search_hocr".
 - Set a sort criteria, eitehr Relevance or, to make results appear in page order,, field_weight.
 - Set a path with a'%node' component to be the search endpoint.
     e.g., paged-content-search/%node.

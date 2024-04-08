@@ -5,6 +5,7 @@
  * Primary module hooks for Islandora IIIF hOCR module.
  */
  use Drupal\search_api\Query\QueryInterface;
+ use Drupal\views\ViewExecutable;
 
 /**
  * Implementation of hook_views_query_alter().
@@ -23,14 +24,23 @@ function islandora_iiif_hocr_views_query_alter(\Drupal\views\ViewExecutable $vie
   if (is_a($query, 'Drupal\search_api\Plugin\views\query\SearchApiQuery')
     && array_key_exists('query_tags', $query->options)
     && in_array('enable_hocr', $query->options['query_tags'])) {
-      $query->setOption('islandora_hocr_properties', [
-        'content' => [],
-      ]);
+    $query->setOption('islandora_hocr_properties', [
+      'content' => [],
+    ]);
+  }
+}
 
-    $query_keys =  \Drupal::request()->query->get('q');
-    if ($query_keys) {
-      $keys_from_query_params = $query->query()->getParseMode()->parseInput($query_keys);
-      $view->query->keys($keys_from_query_params);
-    }
+/**
+ * Implements hook_views_pre_view().
+ *
+ * Handle the fact that Mirador's search always sends queries to '?q='.
+ */
+function islandora_iiif_hocr_views_pre_view(ViewExecutable $view, string $display_id, array $args) {
+  $query_keys =  \Drupal::request()->query->get('q');
+  if ($query_keys) {
+
+    $exposed_input = $view->getExposedInput();
+    $exposed_input['search_hocr'] = $query_keys;
+    $view->setExposedInput($exposed_input);
   }
 }
