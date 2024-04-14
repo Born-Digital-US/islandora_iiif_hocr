@@ -242,7 +242,7 @@ protected $usesOptions = TRUE;
                      $resource["resource"]["@type"] = "dctypes:Text";
                      $resource["resource"]["format"] = "text/html";
                      $resource["resource"]["chars"] = $snippet["text"];
-                     $resource["resource"]["http://dev.llgc.org.uk/sas/full_text"] = $$snippet['text'];
+                     $resource["resource"]["http://dev.llgc.org.uk/sas/full_text"] = $snippet['text'];
 
                      $search_annotation ='/node/' . $parent_nid . '/canvas/' . $mid . '#xywh=' . $x . ',' . $y . ',' . $w . ',' . $h;
                      $resource['on'] = $base_url . $search_annotation;
