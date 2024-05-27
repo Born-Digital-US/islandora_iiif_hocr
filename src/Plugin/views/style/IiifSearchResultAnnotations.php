@@ -147,7 +147,7 @@ protected $usesOptions = TRUE;
     $json['@type'] = "sc:AnnotationList";
 
     if (empty($this->canvasMediaUseTerm)) {
-      $this->canvasMediaUseTerm = $this->entityTypeManager->getStorage('taxonomy_term')->load($this->options['canvas_media_term']);
+      $this->canvasMediaUseTerm = $this->utils->getTermForUri($this->options['canvas_media_term_uri']);
     }
     $json['resources'] = [];
     foreach ($this->view->result as $row) {
