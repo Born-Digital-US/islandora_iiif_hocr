@@ -22,8 +22,7 @@ class OCRHighlightingSolrQueryAlter implements EventSubscriberInterface {
   public function preQuery(PreQueryEvent $event): void {
     $query = $event->getSearchApiQuery();
     $solarium_query = $event->getSolariumQuery();
-    $solarium_query->addParam('hl.ocr.fragsize', 999999999);
-    $solarium_query->addParam('hl.ocr.maxAnalyzedChars', 999999999);
+    $solarium_query->addParam('hl.snippets', 1000);
   }
 
 }
