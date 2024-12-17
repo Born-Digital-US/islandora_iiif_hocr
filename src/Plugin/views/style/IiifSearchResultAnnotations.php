@@ -130,7 +130,9 @@ protected $usesOptions = TRUE;
   public function render() {
 
 
+    $this->view->addCacheContext('url.query_args');
     $json = [];
+
     $json["@context"] = "http://iiif.io/api/presentation/2/context.json";
     $json["startIndex"] = $this->view->getOffset();
 
@@ -262,4 +264,5 @@ protected $usesOptions = TRUE;
     }
 return $row_resources;
   }
+
 }
